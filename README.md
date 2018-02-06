@@ -1,6 +1,8 @@
 Color Shades Palette Generator
 quick codesandbox dev using chroma-js,  ramda, styled-components, for quick testing different color schemes, and creating color scales from base colors
 
+![Screenshot](screenshot.PNG)
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
