@@ -1,5 +1,5 @@
 {
-  "name": "color-generator",
+  "name": "CSPG",
   "description": "Color Shades Palette Generator\nquick codesandbox dev using chroma-js,  ramda, styled-components, for quick testing different color schemes, and creating color scales from base colors",
   "version": "0.0.0",
   "dependencies": {
