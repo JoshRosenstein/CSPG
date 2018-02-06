@@ -25,7 +25,10 @@ export const basecolors = {
   magenta: '#eb2f96',
   slate: '#6f9cb3',
   dusk: '#7781a6',
-  gray: '#aeb9cb'
+  blueGray: '#aeb9cb',
+  lightGray: '#bfbfbf',
+  gray: '#808080',
+  darkGray: '#404040'
 }
 
 export function getColorShades(color, steps = 11) {
