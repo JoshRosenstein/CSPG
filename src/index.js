@@ -2,8 +2,18 @@ import React from 'react'
 import { render } from 'react-dom'
 import Hello from './Hello'
 import chroma from 'chroma-js'
-import styled from 'styled-components'
+import styled,{css, injectGlobal} from 'styled-components'
 import { map, keys, zipObj, anyPass, isEmpty, isNil } from 'ramda'
+
+injectGlobal`
+body {
+  background-color: #3b404e;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+`
 
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
@@ -18,7 +28,7 @@ export const basecolors = {
   lime: '#a0d911',
   green: '#52c41a',
   teal: '#13c2c2',
-  blue: '#1890ff',
+  blue: '#339af0',
   indigo: '#2f54eb',
   violet: '#5141DE',
   purple: '#722ed1',
@@ -96,25 +106,75 @@ function readableColor(color, darktext = '', lighttext = '') {
   return yiq >= 128 ? darktext : lighttext
 }
 
-const Row = styled.div`
-  background-color: ${props => props.color};
-  display: flex;
-  font-size: 0.8em;
-  justify-content: center;
-  align-items: center;
-  padding: 0.05em;
+
+
+export const ColorWrap = styled.div``;
+export const ColorGroup = styled.div``;
+
+export const ColorTitle = styled.span`
+
+  font-size: 1.2rem;
+  text-transform: capitalize;
+  font-weight: bold;
+
+`;
+
+
+export const ColorChip = styled.div`
+
+`;
+
+export const ColorChipBg = styled.div`
+  min-height: 5rem;
+  min-width:5rem;
+background-color: ${props => props.color};
+  border-radius: 2px;
+cursor:pointer;
+  position: relative;
+`;
+
+export const ColorChips = styled.div`
+    display: grid;
+    width: 100%;
+  grid-template-columns: repeat(11, 1fr);
+  grid-auto-rows: 120px;
+  grid-gap: 0rem;
+
+`
+
+
+
+export const ColorHex = styled.div`
+  padding: .2rem .3rem;
+    
+    text-align: start;
   width: 100%;
-  cursor: pointer;
-  outline: none;
-  border: none;
+
+  font-size: 14px;
+
+  color: gray;
+
+  line-height: 1.3;
+`;
+
+export const ColorName = styled.div`
+  padding: .4rem .3rem .2rem;
+
   text-transform: uppercase;
-  min-height: 2rem;
+
+  text-align: left;
+
+  font-size: 14px;
+
+  font-weight: 500;
+`;
+
+const ColorChipsWrap = styled.div`
+
+align-self: center;
+  justify-self: center;
 `
-const RowContent = styled.div`
-  color: ${props => props.color};
-  display: 'inline-block';
-  margin-bottom: 0.1rem;
-`
+
 
 function ColorPalRow({ name, weight }) {
   const main = color(name, weight)
@@ -122,69 +182,74 @@ function ColorPalRow({ name, weight }) {
 
   return (
     <CopyToClipboard text={main} onCopy={() => console.log('copied', main)}>
-      <Row color={main} title={`Click to Copy ${main}`}>
-        <RowContent color={readable}>
-          {weight}-{main}
-        </RowContent>
-      </Row>
+      <ColorChip>
+        <ColorChipBg color={main} title={`Click to Copy ${main}`}>
+        </ColorChipBg>
+        <ColorName>{name} {weight}</ColorName>
+        <ColorHex>{main}
+        </ColorHex>
+      </ColorChip>
     </CopyToClipboard>
   )
 }
 
-const Pal = styled.div`
-  display: 'inline-block';
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
-  width: 20%;
-  padding: 0;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 0.7rem;
-`
+
 
 function ColorPal({ baseColor }) {
   return (
-    <Pal>
-      {baseColor}
+    
+      <ColorChipsWrap>
+      <ColorChips>
       {['l5', 'l4', 'l3', 'l2', 'l1', 'b', 'd1', 'd2', 'd3', 'd4', 'd5'].map(
         step => <ColorPalRow key={step} name={`${baseColor}`} weight={step} />
       )}
-    </Pal>
+      </ColorChips>
+      </ColorChipsWrap>
+   
   )
 }
 
 const colorkeys = keys(basecolors)
 
 const PalHolder = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  background-color: #fff;
+  padding: 2rem;
+
+ 
 `
 
 function Color(props) {
   return (
-    <div {...props}>
-      <PalHolder>
+    
+      <PalHolder {...props}>
         {colorkeys.map(baseColor => (
+          <ColorGroup>
+            <ColorTitle>{baseColor}</ColorTitle>
           <ColorPal key={baseColor} baseColor={baseColor} />
+          </ColorGroup>
         ))}
       </PalHolder>
-    </div>
+   
   )
 }
 
-const styles = {
-  fontFamily: 'sans-serif',
-  textAlign: 'center',
-  width: '50 %',
-  margin: '0 auto'
-}
+const AppStyle = styled.div`
+
+`
+
+const Header = styled.h1`
+ text-align:center;
+ color:#fff;
+`
 
 const App = () => (
-  <div style={styles}>
-    <Hello name="Colors" />
-    <Color />
-  </div>
+  <AppStyle>
+< Header > Hello Colors!</Header >
+   <Color />
+  </AppStyle>
 )
 
 render(<App />, document.getElementById('root'))
+
+ // < Header > Header</Header >
+ //   <Color />
